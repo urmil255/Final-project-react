@@ -24,26 +24,44 @@ header h1 {
   font-weight: 200;
 }
 footer {
-  background-color: #151514;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  background-color: #141413;
   color: #fff;
   position: relative;
   bottom: 0;
   width: 100%;
-  height: 2.5rem;
+  height: 1.2rem;
   font-size: 1.2rem;
-  text-align: center;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  clear: both; /* Add this property to clear any floats and prevent overlap */
+}
+
+/* Media query for small screens (e.g., mobile phones) */
+@media (max-width: 576px) {
+  footer {
+    position: static; /* Set to static for small screens */
+  }
+}
+
+/* Media query for medium-sized screens (e.g., tablets) */
+@media (min-width: 577px) and (max-width: 992px) {
+  footer {
+    position: fixed; /* Set to fixed for medium-sized screens */
+    left: 0;
+  }
+}
+
+/* Media query for large screens (e.g., desktops) */
+@media (min-width: 993px) {
+  footer {
+    position: fixed; /* Set to fixed for large screens */
+  }
 }
 
 
 
-
-
 footer p {
-  color: #ece5e5;
+  color: #eae1e1;
 }
 .note {
   background: #fff;
@@ -71,10 +89,11 @@ footer p {
   position: relative;
   width: 100%;
   max-width: 480px; /* Limit the maximum width */
-  margin: 350px auto 20px auto;
+  margin: 400px auto 20px auto;
   background: #fff;
-  padding: 10px;
-  border-radius: 7px;
+  padding: 100px;
+  border-radius: 5px;
+  margin-top: 5px;
   box-shadow: 0 1px 5px rgb(138, 137, 137);
   overflow: hidden; /* Add overflow property */
 }
