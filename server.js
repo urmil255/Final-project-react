@@ -1,6 +1,20 @@
 const express = require('express');
 const mongoose = require('mongoose');
 const bodyParser = require('body-parser');
+const path = require('path');
+
+
+
+
+// Serve static files from the React build directory
+app.use(express.static(path.join(__dirname, 'build')));
+
+// Add any API routes or other routes here
+
+// For all other routes, serve the index.html file
+app.get('*', (req, res) => {
+  res.sendFile(path.join(__dirname, 'build', 'index.html'));
+});
 
 const { MongoClient, ServerApiVersion } = require('mongodb');
 const uri = "mongodb+srv://urmil:kBYScQIQq34FwcNH@cluster0.usks0w0.mongodb.net/?retryWrites=true&w=majority";
