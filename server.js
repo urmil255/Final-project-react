@@ -44,16 +44,18 @@ async function run() {
 run().catch(console.dir);
 
 
-
-
 const cors = require('cors');
 
 // ...
 
 app.use(cors({
-  origin: 'https://immense-tor-66429-7b1067da5daf.herokuapp.com/',
-  optionsSuccessStatus: 200, // some legacy browsers (IE11, various SmartTVs) choke on 204
+  origin: 'https://immense-tor-66429-7b1067da5daf.herokuapp.com', // or '*' to allow all origins
+  methods: 'GET,HEAD,PUT,PATCH,POST,DELETE',
+  credentials: true,
 }));
+
+// Rest of your server code
+
 app.use(bodyParser.json());
 
 // MongoDB connection

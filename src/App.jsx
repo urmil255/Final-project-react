@@ -26,7 +26,7 @@ function App() {
     if (user) {
       console.log('User UID (useEffect):', user.uid); // Add this line to log the UID
   
-      fetch(`http://localhost:5000/notes?userId=${user.uid}`)
+      fetch(`https://immense-tor-66429-7b1067da5daf.herokuapp.com/notes?userId=${user.uid}`)
         .then((response) => response.json())
         .then((data) => setNoteList(data))
         .catch((error) => console.error('Error fetching notes:', error));
@@ -37,33 +37,33 @@ function App() {
   
 
   const addNote = () => {
-    // Ensure that the user is logged in
-    if (!user) {
-      console.error('User not logged in');
-      return;
-    }
-  
-    console.log('User UID (addNote):', user.uid); // Add this line to log the UID
-  
-    // Add a new note to the server
-    fetch('http://localhost:5000/notes', {
-      method: 'POST',
-      headers: {
-        'Content-Type': 'application/json',
-      },
-      body: JSON.stringify({
-        userId: user.uid,
-        title: newNote.title,
-        content: newNote.content,
-      }),
-    })
-      .then((response) => response.json())
-      .then((data) => setNoteList([...noteList, data]))
-      .catch((error) => console.error('Error adding note:', error));
-  
-    setNewNote({ title: '', content: '' });
-  };
-  
+  // Ensure that the user is logged in
+  if (!user) {
+    console.error('User not logged in');
+    return;
+  }
+
+  console.log('User UID (addNote):', user.uid); // Add this line to log the UID
+
+  // Add a new note to the server
+  fetch('https://immense-tor-66429-7b1067da5daf.herokuapp.com/notes', {
+    method: 'POST',
+    headers: {
+      'Content-Type': 'application/json',
+    },
+    body: JSON.stringify({
+      userId: user.uid,
+      title: newNote.title,
+      content: newNote.content,
+    }),
+  })
+    .then((response) => response.json())
+    .then((data) => setNoteList([...noteList, data]))
+    .catch((error) => console.error('Error adding note:', error));
+
+  setNewNote({ title: '', content: '' });
+};
+
   
 
   
@@ -77,7 +77,7 @@ function App() {
   const deleteNote = (id) => {
     // Delete an individual note on the server
     
-    fetch(`http://localhost:5000/notes/${id}`, {
+    fetch(`https://immense-tor-66429-7b1067da5daf.herokuapp.com/notes/${id}`, {
       method: 'DELETE',
     })
       .then((response) => {
@@ -96,7 +96,7 @@ function App() {
   
   const clearAllNotes = () => {
     // Delete all notes on the server
-    fetch('http://localhost:5000/notes', {
+    fetch('https://immense-tor-66429-7b1067da5daf.herokuapp.com/notes', {
       method: 'DELETE',
     })
       .then((response) => {
