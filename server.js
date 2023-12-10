@@ -1,8 +1,10 @@
-const app = express();
 const express = require('express');
 const mongoose = require('mongoose');
 const bodyParser = require('body-parser');
 const path = require('path');
+
+const app = express();
+const PORT = process.env.PORT || 5000;
 
 // Serve static files from the React build directory
 app.use(express.static(path.join(__dirname, 'build')));
