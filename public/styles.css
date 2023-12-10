@@ -35,6 +35,44 @@ footer {
   height: 1.2rem;
   font-size: 1.2rem;
 }
+/* Example hover effect for notes */
+.note:hover {
+  background-color: #f5ba13;
+  box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+}
+/* Example transition effect for notes */
+.note {
+  transition: background-color 0.3s, box-shadow 0.3s;
+}
+/* Example transition effect for form elements */
+input, textarea {
+  transition: border-color 0.3s;
+}
+
+input:focus, textarea:focus {
+  border-color: #5f9ea0; /* Change to a color of your choice */
+}
+/* Example flexbox for layout */
+
+/* Example mobile-friendly navigation */
+.navbar {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+@media screen and (max-width: 768px) {
+  .navbar {
+    flex-direction: column;
+  }
+}
+
+
+button:hover {
+  background-color: #288f41; /* Darker shade when hovered */
+}
+
+
 
 /* Media query for small screens (e.g., mobile phones) */
 @media (max-width: 576px) {
@@ -55,6 +93,19 @@ footer {
 @media (min-width: 993px) {
   footer {
     position: fixed; /* Set to fixed for large screens */
+  }
+}
+/* Example media query for responsiveness */
+@media screen and (max-width: 768px) {
+  .notes-container {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: space-around;
+  }
+
+  .note {
+    width: 48%;
+    margin: 1%;
   }
 }
 
