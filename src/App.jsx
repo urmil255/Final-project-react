@@ -14,36 +14,26 @@ function App() {
   console.log('Current user:', user);
 
   useEffect(() => {
-    const unsubscribe = auth.onAuthStateChanged((user) => {
-      setUser(user);
-      setAuthChecked(true);
+    const fetchData = async () => {
+      try {
+        const response = await fetch(`https://immense-tor-66429-7b1067da5daf.herokuapp.com/notes?userId=${user.uid}`);
+        if (!response.ok) {
+          throw new Error(`HTTP error! Status: ${response.status}`);
+        }
   
-      // Fetch notes when the user is initially authenticated
-      if (user) {
-        console.log('User UID (useEffect):', user.uid);
-  
-        fetch(`https://immense-tor-66429-7b1067da5daf.herokuapp.com/notes?userId=${user.uid}`)
-          .then((response) => {
-            if (!response.ok) {
-              throw new Error(`HTTP error! Status: ${response.status}`);
-            }
-  
-            const contentType = response.headers.get('content-type');
-            if (contentType && contentType.includes('application/json')) {
-              return response.json();
-            } else {
-              console.error('Unexpected response content type:', contentType);
-              // Handle HTML response, maybe show an error message to the user
-              return [];
-            }
-          })
-          .then((data) => setNoteList(data))
-          .catch((error) => console.error('Error fetching notes:', error));
+        const data = await response.json();
+        setNoteList(data);
+      } catch (error) {
+        console.error('Error fetching notes:', error);
       }
-    });
+    };
   
-    return () => unsubscribe();
-  }, []);
+    if (user) {
+      console.log('User UID (useEffect):', user.uid);
+      fetchData();
+    }
+  }, [user]); // Include user in the dependency array
+  
   
   
   
