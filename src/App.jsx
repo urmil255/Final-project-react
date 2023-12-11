@@ -7,7 +7,7 @@ import Login from "./login";
 import { auth,database } from "./firebase";
 
 function App() {
-  const [user, setUser] = useState();
+  const [user, setUser] = useState("");
   const [authChecked, setAuthChecked] = useState(false);
   const [noteList, setNoteList] = useState(notesData);
   const [newNote, setNewNote] = useState({ title: "", content: "" });
@@ -17,21 +17,21 @@ function App() {
     const unsubscribe = auth.onAuthStateChanged((user) => {
       setUser(user);
       setAuthChecked(true);
-    });
-
-    return () => unsubscribe();
-  }, []);
-  useEffect(() => {
-    // Fetch notes from the server
-    if (user) {
-      console.log('User UID (useEffect):', user.uid); // Add this line to log the UID
   
-      fetch(`https://immense-tor-66429-7b1067da5daf.herokuapp.com/notes?userId=${user.uid}`)
-        .then((response) => response.json())
-        .then((data) => setNoteList(data))
-        .catch((error) => console.error('Error fetching notes:', error));
-    }
-  }, [user]);
+      // Fetch notes when the user is initially authenticated
+      if (user) {
+        console.log('User UID (useEffect):', user.uid);
+  
+        fetch(`https://immense-tor-66429-7b1067da5daf.herokuapp.com/notes?userId=${user.uid}`)
+          .then((response) => response.json())
+          .then((data) => setNoteList(data))
+          .catch((error) => console.error('Error fetching notes:', error));
+      }
+    });
+  
+    return () => unsubscribe();
+  }, []); // Make sure to pass an empty dependency array to run this effect only once when the component mounts
+  
   
   
   
