@@ -93,7 +93,14 @@ const Note = mongoose.model('Note', noteSchema);
 // CRUD routes
 
 // Create
+// Example server-side code
 app.post('/notes', (req, res) => {
+  // Ensure that the user is logged in
+  if (!req.body.userId) {
+    return res.status(401).json({ error: 'User not authenticated' });
+  }
+
+  // Create and save the note with the provided userId
   const newNote = new Note({
     userId: req.body.userId,
     title: req.body.title,
@@ -113,6 +120,7 @@ app.post('/notes', (req, res) => {
 
 
 
+
 // Read
 app.get('/notes', async (req, res) => {
   try {
@@ -129,6 +137,7 @@ app.get('/notes', async (req, res) => {
     res.status(500).send('Error retrieving notes from database');
   }
 });
+
 
 
   
