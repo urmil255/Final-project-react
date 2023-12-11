@@ -18,7 +18,7 @@ app.get('*', (req, res) => {
 
 const { MongoClient, ServerApiVersion } = require('mongodb');
 const uri =
-  'mongodb+srv://utrivedi330:xzujw1smgsvhgiIv@clusterkeeper.58hhgel.mongodb.net/';
+  'mongodb+srv://utrivedi330:xzujw1smgsvhgiIv@clusterkeeper.58hhgel.mongodb.net/?retryWrites=true&w=majority';
 
 // Create a MongoClient with a MongoClientOptions object to set the Stable API version
 const client = new MongoClient(uri, {
@@ -59,7 +59,7 @@ app.use(cors({
 app.use(bodyParser.json());
 
 // MongoDB connection
-mongoose.connect('mongodb+srv://utrivedi330:xzujw1smgsvhgiIv@clusterkeeper.58hhgel.mongodb.net/', {
+mongoose.connect('mongodb+srv://utrivedi330:xzujw1smgsvhgiIv@clusterkeeper.58hhgel.mongodb.net/?retryWrites=true&w=majority', {
   useNewUrlParser: true,
   useUnifiedTopology: true,
 });
