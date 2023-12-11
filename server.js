@@ -18,7 +18,7 @@ app.get('*', (req, res) => {
 
 const { MongoClient, ServerApiVersion } = require('mongodb');
 const uri =
-  'mongodb+srv://utrivedi330:xzujw1smgsvhgiIv@clusterkeeper.58hhgel.mongodb.net/?retryWrites=true&w=majority';
+  'mongodb+srv://utrivedi330:1Su0el4i4OJGalcU@clusterkeeper.58hhgel.mongodb.net/?retryWrites=true&w=majority';
 
 // Create a MongoClient with a MongoClientOptions object to set the Stable API version
 const client = new MongoClient(uri, {
@@ -49,7 +49,7 @@ const cors = require('cors');
 // ...
 
 app.use(cors({
-  origin: 'https://immense-tor-66429-7b1067da5daf.herokuapp.com', // or '*' to allow all origins
+  origin: '*', // or '*' to allow all origins
   methods: 'GET,HEAD,PUT,PATCH,POST,DELETE',
   credentials: true,
 }));
@@ -59,7 +59,7 @@ app.use(cors({
 app.use(bodyParser.json());
 
 // MongoDB connection
-mongoose.connect('mongodb+srv://utrivedi330:xzujw1smgsvhgiIv@clusterkeeper.58hhgel.mongodb.net/?retryWrites=true&w=majority', {
+mongoose.connect('mongodb+srv://utrivedi330:1Su0el4i4OJGalcU@clusterkeeper.58hhgel.mongodb.net/?retryWrites=true&w=majority', {
   useNewUrlParser: true,
   useUnifiedTopology: true,
 });
@@ -80,10 +80,11 @@ app.listen(PORT, () => {
 const Schema = mongoose.Schema;
 
 const noteSchema = new Schema({
-  userId: String, // Add this field to associate notes with users
+  userId: mongoose.Schema.Types.ObjectId,
   title: String,
   content: String,
 });
+
 
 
 const Note = mongoose.model('Note', noteSchema);
