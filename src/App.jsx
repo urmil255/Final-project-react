@@ -9,7 +9,7 @@ import { auth,database } from "./firebase";
 function App() {
   const [user, setUser] = useState("");
   const [authChecked, setAuthChecked] = useState(false);
-  const [noteList, setNoteList] = useState(notesData);
+  const [noteList, setNoteList] = useState([]);
   const [newNote, setNewNote] = useState({ title: "", content: "" });
   console.log('Current user:', user);
 
@@ -23,14 +23,15 @@ function App() {
         console.log('User UID (useEffect):', user.uid);
   
         fetch(`https://immense-tor-66429-7b1067da5daf.herokuapp.com/notes?userId=${user.uid}`)
-          .then((response) => response.json())
+          .then((response) => response.json()) // Fixed: response.json() instead of response()
           .then((data) => setNoteList(data))
           .catch((error) => console.error('Error fetching notes:', error));
       }
     });
   
     return () => unsubscribe();
-  }, []); // Make sure to pass an empty dependency array to run this effect only once when the component mounts
+  }, []);
+   // Make sure to pass an empty dependency array to run this effect only once when the component mounts
   
   
   
