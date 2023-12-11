@@ -49,7 +49,7 @@ const cors = require('cors');
 // ...
 
 app.use(cors({
-  origin: 'https://immense-tor-66429-7b1067da5daf.herokuapp.com/', // or '*' to allow all origins
+  origin: 'https://immense-tor-66429-7b1067da5daf.herokuapp.com', // or '*' to allow all origins
   methods: 'GET,HEAD,PUT,PATCH,POST,DELETE',
   credentials: true,
 }));
@@ -68,9 +68,6 @@ const connection = mongoose.connection;
 connection.once('open', () => {
   console.log('MongoDB database connection established successfully');
 });
-connection.on('error', (err) => {
-  console.error('MongoDB connection error:', err);
-});
 
 // Define routes here (Create, Read, Update, Delete)
 
@@ -82,20 +79,14 @@ app.listen(PORT, () => {
 
 const Schema = mongoose.Schema;
 
-const noteSchema = new mongoose.Schema({
-  userId: {
-    type: mongoose.Schema.Types.ObjectId,
-    // If you want to allow strings as well, uncomment the line below
-    // or adjust it according to your needs
-    // type: mongoose.Schema.Types.Mixed,
-    required: true
-  },
+const noteSchema = new Schema({
+  userId: String, // Add this field to associate notes with users
   title: String,
-  content: String
+  content: String,
 });
 
-const Note = mongoose.model('Note', noteSchema);
 
+const Note = mongoose.model('Note', noteSchema);
 
 
 
