@@ -32,7 +32,9 @@ function App() {
             if (contentType && contentType.includes('application/json')) {
               return response.json();
             } else {
-              throw new Error('Unexpected response content type: ' + contentType);
+              console.error('Unexpected response content type:', contentType);
+              // Handle HTML response, maybe show an error message to the user
+              return [];
             }
           })
           .then((data) => setNoteList(data))
@@ -42,6 +44,7 @@ function App() {
   
     return () => unsubscribe();
   }, []);
+  
   
   
    // Make sure to pass an empty dependency array to run this effect only once when the component mounts
