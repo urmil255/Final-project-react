@@ -27,7 +27,13 @@ function App() {
             if (!response.ok) {
               throw new Error(`HTTP error! Status: ${response.status}`);
             }
-            return response.json();
+  
+            const contentType = response.headers.get('content-type');
+            if (contentType && contentType.includes('application/json')) {
+              return response.json();
+            } else {
+              throw new Error('Unexpected response content type: ' + contentType);
+            }
           })
           .then((data) => setNoteList(data))
           .catch((error) => console.error('Error fetching notes:', error));
@@ -36,6 +42,7 @@ function App() {
   
     return () => unsubscribe();
   }, []);
+  
   
    // Make sure to pass an empty dependency array to run this effect only once when the component mounts
   
