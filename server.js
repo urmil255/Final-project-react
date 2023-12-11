@@ -49,7 +49,7 @@ const cors = require('cors');
 // ...
 
 app.use(cors({
-  origin: '*', // or '*' to allow all origins
+  origin: 'https://immense-tor-66429-7b1067da5daf.herokuapp.com/', // or '*' to allow all origins
   methods: 'GET,HEAD,PUT,PATCH,POST,DELETE',
   credentials: true,
 }));
@@ -82,15 +82,20 @@ app.listen(PORT, () => {
 
 const Schema = mongoose.Schema;
 
-const noteSchema = new Schema({
-  userId: mongoose.Schema.Types.ObjectId,
+const noteSchema = new mongoose.Schema({
+  userId: {
+    type: mongoose.Schema.Types.ObjectId,
+    // If you want to allow strings as well, uncomment the line below
+    // or adjust it according to your needs
+    // type: mongoose.Schema.Types.Mixed,
+    required: true
+  },
   title: String,
-  content: String,
+  content: String
 });
 
-
-
 const Note = mongoose.model('Note', noteSchema);
+
 
 
 
