@@ -23,7 +23,12 @@ function App() {
         console.log('User UID (useEffect):', user.uid);
   
         fetch(`https://immense-tor-66429-7b1067da5daf.herokuapp.com/notes?userId=${user.uid}`)
-          .then((response) => response.json()) // Fixed: response.json() instead of response()
+          .then((response) => {
+            if (!response.ok) {
+              throw new Error(`HTTP error! Status: ${response.status}`);
+            }
+            return response.json();
+          })
           .then((data) => setNoteList(data))
           .catch((error) => console.error('Error fetching notes:', error));
       }
@@ -31,6 +36,7 @@ function App() {
   
     return () => unsubscribe();
   }, []);
+  
    // Make sure to pass an empty dependency array to run this effect only once when the component mounts
   
   
