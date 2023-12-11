@@ -14,14 +14,18 @@ function App() {
   console.log('Current user:', user);
 
   useEffect(() => {
+    console.log('Effect started');
+  
     const fetchData = async () => {
       try {
+        console.log('Fetching notes...');
         const response = await fetch(`https://immense-tor-66429-7b1067da5daf.herokuapp.com/notes?userId=${user.uid}`);
         if (!response.ok) {
           throw new Error(`HTTP error! Status: ${response.status}`);
         }
   
         const data = await response.json();
+        console.log('Fetched notes:', data);
         setNoteList(data);
       } catch (error) {
         console.error('Error fetching notes:', error);
@@ -32,7 +36,11 @@ function App() {
       console.log('User UID (useEffect):', user.uid);
       fetchData();
     }
-  }, [user]); // Include user in the dependency array
+  
+    console.log('Effect completed');
+  
+  }, [user]);
+   // Include user in the dependency array
   
   
   
