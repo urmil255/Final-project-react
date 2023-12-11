@@ -18,7 +18,7 @@ app.get('*', (req, res) => {
 
 const { MongoClient, ServerApiVersion } = require('mongodb');
 const uri =
-  'mongodb+srv://utrivedi330:1Su0el4i4OJGalcU@clusterkeeper.58hhgel.mongodb.net/?retryWrites=true&w=majority';
+  'mongodb+srv://utrivedi330:dhz988TWmhlf2HAb@clusterkeeper.58hhgel.mongodb.net/?retryWrites=true&w=majority';
 
 // Create a MongoClient with a MongoClientOptions object to set the Stable API version
 const client = new MongoClient(uri, {
@@ -59,7 +59,7 @@ app.use(cors({
 app.use(bodyParser.json());
 
 // MongoDB connection
-mongoose.connect('mongodb+srv://utrivedi330:1Su0el4i4OJGalcU@clusterkeeper.58hhgel.mongodb.net/?retryWrites=true&w=majority', {
+mongoose.connect('mongodb+srv://utrivedi330:dhz988TWmhlf2HAb@clusterkeeper.58hhgel.mongodb.net/?retryWrites=true&w=majority', {
   useNewUrlParser: true,
   useUnifiedTopology: true,
 });
@@ -67,6 +67,9 @@ mongoose.connect('mongodb+srv://utrivedi330:1Su0el4i4OJGalcU@clusterkeeper.58hhg
 const connection = mongoose.connection;
 connection.once('open', () => {
   console.log('MongoDB database connection established successfully');
+});
+connection.on('error', (err) => {
+  console.error('MongoDB connection error:', err);
 });
 
 // Define routes here (Create, Read, Update, Delete)
