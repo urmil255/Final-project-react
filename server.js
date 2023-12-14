@@ -1,24 +1,9 @@
 const express = require('express');
 const mongoose = require('mongoose');
 const bodyParser = require('body-parser');
-const path = require('path');
-
-const app = express();
-const PORT = process.env.PORT || 5000;
-
-// Serve static files from the React build directory
-app.use(express.static(path.join(__dirname, 'build')));
-
-// Add any API routes or other routes here
-
-// For all other routes, serve the index.html file
-app.get('*', (req, res) => {
-  res.sendFile(path.join(__dirname, 'build', 'index.html'));
-});
 
 const { MongoClient, ServerApiVersion } = require('mongodb');
-const uri =
-  'mongodb+srv://utrivedi330:dhz988TWmhlf2HAb@clusterkeeper.58hhgel.mongodb.net/?retryWrites=true&w=majority';
+const uri = "mongodb+srv://urmil:kBYScQIQq34FwcNH@cluster0.usks0w0.mongodb.net/?retryWrites=true&w=majority";
 
 // Create a MongoClient with a MongoClientOptions object to set the Stable API version
 const client = new MongoClient(uri, {
@@ -26,7 +11,7 @@ const client = new MongoClient(uri, {
     version: ServerApiVersion.v1,
     strict: true,
     deprecationErrors: true,
-  },
+  }
 });
 
 async function run() {
@@ -34,8 +19,8 @@ async function run() {
     // Connect the client to the server	(optional starting in v4.7)
     await client.connect();
     // Send a ping to confirm a successful connection
-    await client.db('admin').command({ ping: 1 });
-    console.log('Pinged your deployment. You successfully connected to MongoDB!');
+    await client.db("admin").command({ ping: 1 });
+    console.log("Pinged your deployment. You successfully connected to MongoDB!");
   } finally {
     // Ensures that the client will close when you finish/error
     await client.close();
@@ -44,22 +29,21 @@ async function run() {
 run().catch(console.dir);
 
 
+const app = express();
+const PORT = process.env.PORT || 5000;
+
 const cors = require('cors');
 
 // ...
 
 app.use(cors({
-  origin: 'https://immense-tor-66429-7b1067da5daf.herokuapp.com', // or '*' to allow all origins
-  methods: 'GET,HEAD,PUT,PATCH,POST,DELETE',
-  credentials: true,
+  origin: 'http://localhost:3000',
+  optionsSuccessStatus: 200, 
 }));
-
-// Rest of your server code
-
 app.use(bodyParser.json());
 
 // MongoDB connection
-mongoose.connect('mongodb+srv://utrivedi330:dhz988TWmhlf2HAb@clusterkeeper.58hhgel.mongodb.net/?retryWrites=true&w=majority', {
+mongoose.connect('mongodb+srv://urmil:kBYScQIQq34FwcNH@cluster0.usks0w0.mongodb.net/?retryWrites=true&w=majority', {
   useNewUrlParser: true,
   useUnifiedTopology: true,
 });
@@ -69,13 +53,9 @@ connection.once('open', () => {
   console.log('MongoDB database connection established successfully');
 });
 
-// Define routes here (Create, Read, Update, Delete)
-
 app.listen(PORT, () => {
   console.log(`Server is running on port: ${PORT}`);
 });
-
-// Add these lines to your server.js file
 
 const Schema = mongoose.Schema;
 
@@ -88,19 +68,8 @@ const noteSchema = new Schema({
 
 const Note = mongoose.model('Note', noteSchema);
 
-
-
-// CRUD routes
-
 // Create
-// Example server-side code
 app.post('/notes', (req, res) => {
-  // Ensure that the user is logged in
-  if (!req.body.userId) {
-    return res.status(401).json({ error: 'User not authenticated' });
-  }
-
-  // Create and save the note with the provided userId
   const newNote = new Note({
     userId: req.body.userId,
     title: req.body.title,
@@ -120,7 +89,6 @@ app.post('/notes', (req, res) => {
 
 
 
-
 // Read
 app.get('/notes', async (req, res) => {
   try {
@@ -137,7 +105,6 @@ app.get('/notes', async (req, res) => {
     res.status(500).send('Error retrieving notes from database');
   }
 });
-
 
 
   
@@ -161,9 +128,7 @@ app.put('/notes/:id', (req, res) => {
   });
 });
 
-// Delete
-// Modify the existing delete route to handle both individual note deletion and clearing all notes
-// Modify the existing delete route to handle both individual note deletion and clearing all notes
+
 app.delete('/notes/:id?', async (req, res) => {
   try {
     if (req.params.id) {
@@ -185,5 +150,3 @@ app.delete('/notes/:id?', async (req, res) => {
     res.status(500).json({ error: 'Error deleting notes from the database' });
   }
 });
-
-

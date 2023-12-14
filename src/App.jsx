@@ -2,83 +2,67 @@ import React, { useState, useEffect } from "react";
 import Header from "./Header";
 import Footer from "./Footer";
 import Note from "./Note";
-import notesData from "./notes";
 import Login from "./login";
-import { auth,database } from "./firebase";
+import { auth } from "./firebase";
 
 function App() {
-  const [user, setUser] = useState("");
+  const [user, setUser] = useState();
   const [authChecked, setAuthChecked] = useState(false);
   const [noteList, setNoteList] = useState([]);
   const [newNote, setNewNote] = useState({ title: "", content: "" });
   console.log('Current user:', user);
 
   useEffect(() => {
-    console.log('Effect started');
-  
-    const fetchData = async () => {
-      try {
-        console.log('Fetching notes...');
-        const response = await fetch(`https://immense-tor-66429-7b1067da5daf.herokuapp.com/notes?userId=${user.uid}`);
-        if (!response.ok) {
-          throw new Error(`HTTP error! Status: ${response.status}`);
-        }
-  
-        const data = await response.json();
-        console.log('Fetched notes:', data);
-        setNoteList(data);
-      } catch (error) {
-        console.error('Error fetching notes:', error);
-      }
-    };
-  
+    const unsubscribe = auth.onAuthStateChanged((user) => {
+      setUser(user);
+      setAuthChecked(true);
+    });
+
+    return () => unsubscribe();
+  }, []);
+  useEffect(() => {
+    // Fetch notes from the server
     if (user) {
-      console.log('User UID (useEffect):', user.uid);
-      fetchData();
+      console.log('User UID (useEffect):', user.uid); // Add this line to log the UID
+  
+      fetch(`http://localhost:5000/notes?userId=${user.uid}`)
+        .then((response) => response.json())
+        .then((data) => setNoteList(data))
+        .catch((error) => console.error('Error fetching notes:', error));
     }
-  
-    console.log('Effect completed');
-  
   }, [user]);
-   // Include user in the dependency array
-  
-  
-  
-  
-   // Make sure to pass an empty dependency array to run this effect only once when the component mounts
-  
   
   
   
 
   const addNote = () => {
-  // Ensure that the user is logged in
-  if (!user) {
-    console.error('User not logged in');
-    return;
-  }
-
-  console.log('User UID (addNote):', user.uid); // Add this line to log the UID
-
-  // Add a new note to the server
-  fetch('https://immense-tor-66429-7b1067da5daf.herokuapp.com/notes', {
-    method: 'POST',
-    headers: {
-      'Content-Type': 'application/json',
-    },
-    body: JSON.stringify({
-      userId: user.uid,
-      title: newNote.title,
-      content: newNote.content,
-    }),
-  })
-    .then((response) => response.json())
-    .then((data) => setNoteList([...noteList, data]))
-    .catch((error) => console.error('Error adding note:', error));
-
-  setNewNote({ title: '', content: '' });
-};
-
+    // Ensure that the user is logged in
+    if (!user) {
+      console.error('User not logged in');
+      return;
+    }
+  
+    console.log('User UID (addNote):', user.uid); // Add this line to log the UID
+  
+    // Add a new note to the server
+    fetch('http://localhost:5000/notes', {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+      },
+      body: JSON.stringify({
+        userId: user.uid,
+        title: newNote.title,
+        content: newNote.content,
+      }),
+    })
+      .then((response) => response.json())
+      .then((data) => setNoteList([...noteList, data]))
+      .catch((error) => console.error('Error adding note:', error));
+  
+    setNewNote({ title: '', content: '' });
+  };
+  
   
 
   
@@ -92,7 +76,7 @@ function App() {
   const deleteNote = (id) => {
     // Delete an individual note on the server
     
-    fetch(`https://immense-tor-66429-7b1067da5daf.herokuapp.com/notes/${id}`, {
+    fetch(`http://localhost:5000/notes/${id}`, {
       method: 'DELETE',
     })
       .then((response) => {
@@ -111,7 +95,7 @@ function App() {
   
   const clearAllNotes = () => {
     // Delete all notes on the server
-    fetch('https://immense-tor-66429-7b1067da5daf.herokuapp.com/notes', {
+    fetch('http://localhost:5000/notes', {
       method: 'DELETE',
     })
       .then((response) => {

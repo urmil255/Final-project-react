@@ -3,17 +3,27 @@
   margin: 0;
   box-sizing: border-box;
 }
+
 html {
   font-family: "Montserrat", sans-serif;
 }
+
 body {
-  background: #eee;
-  padding: 0 16px;
+  margin: 0;
+  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', 'Oxygen',
+    'Ubuntu', 'Cantarell', 'Fira Sans', 'Droid Sans', 'Helvetica Neue',
+    sans-serif;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+code {
+  font-family: source-code-pro, Menlo, Monaco, Consolas, 'Courier New',
+    monospace;
 }
 
 header {
   background-color: #f5ba13;
-  margin: auto -16px;
   padding: 16px 32px;
   box-shadow: 0 0 10px 0 rgba(0, 0, 0, 0.3);
 }
@@ -23,27 +33,69 @@ header h1 {
   font-family: "McLaren", cursive;
   font-weight: 200;
 }
+
 footer {
   display: flex;
-  justify-content: center;
+  flex-direction: column;
+  justify-content: space-between;
   align-items: center;
   background-color: #141413;
   color: #fff;
   position: relative;
   bottom: 0;
   width: 100%;
-  height: 1.2rem;
+  height: 80px;
   font-size: 1.2rem;
+  padding: 4px 0; /* Adjusted padding */
+  box-sizing: border-box;
 }
+
+.footer-content {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  width: 100%;
+}
+
+.footer-line {
+  width: 100%;
+  border-top: 1px solid #444;
+  margin: 10px 0;
+}
+
+/* Add these styles to your CSS file */
+.floating-text {
+  margin: 0 16px; /* Added margin */
+  animation: floatAnimation 2s infinite ease-in-out; /* Add animation */
+}
+
+@keyframes floatAnimation {
+  0% {
+    transform: translateX(-100vw);
+  }
+ 
+  100% {
+    transform: translateX(100vw);
+  }
+}
+
+.floating-text {
+  animation: floatAnimation 10s linear infinite; /* Adjust the duration (10s in this example) */
+  animation-delay: -100s; /* Negative delay to make it appear quickly after disappearing */
+}
+
+
 /* Example hover effect for notes */
 .note:hover {
   background-color: #f5ba13;
   box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
 }
+
 /* Example transition effect for notes */
 .note {
   transition: background-color 0.3s, box-shadow 0.3s;
 }
+
 /* Example transition effect for form elements */
 input, textarea {
   transition: border-color 0.3s;
@@ -52,6 +104,7 @@ input, textarea {
 input:focus, textarea:focus {
   border-color: #5f9ea0; /* Change to a color of your choice */
 }
+
 /* Example flexbox for layout */
 
 /* Example mobile-friendly navigation */
@@ -65,14 +118,22 @@ input:focus, textarea:focus {
   .navbar {
     flex-direction: column;
   }
-}
 
+  .notes-container {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: space-around;
+  }
+
+  .note {
+    width: 48%;
+    margin: 1%;
+  }
+}
 
 button:hover {
-  background-color: #288f41; /* Darker shade when hovered */
+  background-color: #ec1d0a; /* Darker shade when hovered */
 }
-
-
 
 /* Media query for small screens (e.g., mobile phones) */
 @media (max-width: 576px) {
@@ -95,25 +156,7 @@ button:hover {
     position: fixed; /* Set to fixed for large screens */
   }
 }
-/* Example media query for responsiveness */
-@media screen and (max-width: 768px) {
-  .notes-container {
-    display: flex;
-    flex-wrap: wrap;
-    justify-content: space-around;
-  }
 
-  .note {
-    width: 48%;
-    margin: 1%;
-  }
-}
-
-
-
-footer p {
-  color: #eae1e1;
-}
 .note {
   background: #fff;
   border-radius: 7px;
@@ -123,60 +166,54 @@ footer p {
   margin: 16px;
   float: left;
 }
+
 .note h1 {
   font-size: 1.1em;
   margin-bottom: 6px;
 }
+
 .note p {
   font-size: 1.1em;
   margin-bottom: 10px;
   white-space: pre-wrap;
   word-wrap: break-word;
 }
+
 .note-form {
   display: block;
   resize: none;
-
   position: relative;
   width: 100%;
-  max-width: 480px; /* Limit the maximum width */
-  margin: 400px auto 20px auto;
+  max-width: 480px;
+  margin: 20px auto; /* Adjust margin for better spacing */
   background: #fff;
-  padding: 100px;
-  border-radius: 5px;
-  margin-top: 5px;
+  padding: 10px;
+  border-radius: 7px;
   box-shadow: 0 1px 5px rgb(138, 137, 137);
-  overflow: hidden; /* Add overflow property */
+  overflow: hidden;
 }
 
-.note-form input {
-  width: 100%;
+.note-form input,
+.note-form textarea {
+  width: calc(100% - 20px); /* Adjust width for padding */
   border: none;
   padding: 10px;
   outline: none;
   font-size: 1.2em;
   font-family: inherit;
   margin-bottom: 10px;
-  border-radius: 5px; /* Add a slight border radius */
+  border-radius: 5px;
 }
 
 .note-form textarea {
-  width: 100%;
-  max-height: 80px; /* Use max-height instead of height */
-  border: none;
-  padding: 15px;
-  outline: none;
-  font-size: 1.2em;
-  font-family: inherit;
-  resize: none;
-  margin-bottom: 15px;
-  border-radius: 5px; /* Add a slight border radius */
-  overflow-y: auto; /* Add overflow property for vertical scroll if content exceeds the height */
+  max-height: 120px; /* Increase max-height for better usability */
 }
+
 .clear-button {
-  margin-top: 10px; /* Adjust the margin-top as needed to move it down */
+  margin-top: 10px;
   background: #f5ba13;
 }
+
 .button-container {
   display: flex;
   justify-content: center;
@@ -195,9 +232,6 @@ footer p {
   font-size: 1.2em;
   width: 100%;
 }
-
-/* Rest of your CSS remains unchanged */
-
 
 .note-form button:hover {
   background: #ff9900;
@@ -225,13 +259,15 @@ footer p {
 
 form {
   position: relative;
-  width: 280px;
+  width: 100%; /* Adjust width for better responsiveness */
+  max-width: 480px;
   margin: 30px auto 20px auto;
   background: #fff;
   padding: 15px;
   border-radius: 7px;
   box-shadow: 0 1px 5px rgb(138, 137, 137);
 }
+
 form input,
 form textarea {
   width: 100%;
@@ -242,6 +278,7 @@ form textarea {
   font-family: inherit;
   resize: none;
 }
+
 form button {
   position: absolute;
   right: 18px;
@@ -256,12 +293,11 @@ form button {
   cursor: pointer;
   outline: none;
 }
+
 header h1 {
   color: #fff;
   font-family: "McLaren", cursive;
   font-weight: 200;
-
-  /* Add animation properties for the header */
   animation: scale-up 1.5s ease-in-out 0s 1;
 }
 
@@ -273,6 +309,7 @@ header h1 {
     transform: scale(1);
   }
 }
+
 .note {
   background: #fff;
   border-radius: 7px;
@@ -292,17 +329,19 @@ header h1 {
     opacity: 1;
   }
 }
+
 .note-form {
   display: block;
   resize: none;
   position: relative;
   width: 100%;
   max-width: 480px;
-  margin: 350px auto 20px auto;
+  margin: 20px auto; /* Adjust margin for better spacing */
   background: #fff;
   padding: 10px;
   border-radius: 7px;
   box-shadow: 0 1px 5px rgb(138, 137, 137);
+  overflow: hidden;
   animation: fade-in 1.5s ease-in-out 0s 1;
 }
 
@@ -314,6 +353,17 @@ header h1 {
     opacity: 1;
   }
 }
+/* Add these styles to your CSS file */
+.logout-button {
+  background: #ff0000; /* Change background color to red */
+  color: #fff; /* Change text color to white */
+  border: none; /* Remove border */
+  padding: 10px 20px; /* Adjust padding as needed */
+  border-radius: 5px; /* Add border-radius for rounded corners */
+  cursor: pointer;
+}
 
-
+.logout-button:hover {
+  background: #cc0000; /* Darker shade when hovered */
+}
 
