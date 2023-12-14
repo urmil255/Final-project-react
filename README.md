@@ -1,5 +1,5 @@
 Keeper App
-Keeper App is a simple note-keeping application built with React, Node.js, Express, and MongoDB. Users can create, view, and delete notes, and the application uses Firebase for authentication.
+-->Keeper App is a simple note-keeping application built with React, Node.js, Express, and MongoDB. Users can create, view, and delete notes, and the application uses Firebase for authentication.
 
 Table of Contents
 •	Features
@@ -27,13 +27,13 @@ Table of Contents
 
 
 Getting Started
-Prerequisites
+->Prerequisites
 •	Node.js
 •	npm
 •	MongoDB Atlas account
 •	Firebase account
 Installation
-Clone the repository:
+->Clone the repository:
 •	git clone https://github.com/your-username/keeper-app.git
 Install frontend dependencies:
 •	cd keeper-app
