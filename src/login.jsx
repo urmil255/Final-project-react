@@ -1,5 +1,7 @@
 import React, { useState } from 'react';
 import { auth } from './firebase';
+import { ToastContainer, toast } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
 import { signInWithEmailAndPassword } from 'firebase/auth';
 // ... (your imports)
 
@@ -13,10 +15,10 @@ const Login = () => {
     try {
       // Use signInWithEmailAndPassword from Firebase auth
       await signInWithEmailAndPassword(auth, email, password);
-
       console.log('Logged in successfully!');
     } catch (error) {
       console.error('Error logging in:', error.message);
+       toast.error('User is not authenticated. Please enter valid credentials.');
       // You might want to display an error message to the user here
     }
   };
@@ -39,6 +41,7 @@ const Login = () => {
         />
         <button type='submit'>Login</button>
       </form>
+      <ToastContainer/>
     </div>
   );
 };

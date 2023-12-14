@@ -1,0 +1,5 @@
+
+image = "mongo:latest"
+port = 27017
+NODE_ENV = "production"
+MONGODB_URI = "@your-database-variable"

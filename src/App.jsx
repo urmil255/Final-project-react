@@ -5,6 +5,7 @@ import Note from "./Note";
 import Login from "./login";
 import { auth } from "./firebase";
 
+
 function App() {
   const [user, setUser] = useState();
   const [authChecked, setAuthChecked] = useState(false);
